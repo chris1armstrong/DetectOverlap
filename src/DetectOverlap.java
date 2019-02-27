@@ -1,13 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DetectOverlap {
 	public static void main(String[] args) throws FileNotFoundException {
 		File file = new File(args[0]);
 		Scanner scan = new Scanner(file);
-		ArrayList<Claim> claims = new ArrayList<Claim>();
+		HashMap<Integer,Claim> claims = new HashMap<Integer,Claim>();
 		
 		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
@@ -18,17 +18,21 @@ public class DetectOverlap {
 			Integer width = Integer.parseInt(inputs[3]);
 			Integer height = Integer.parseInt(inputs[4]);
 			Claim claim = new Claim(id, left, top, width, height);
-			claims.add(claim);
+			claims.put(claim.getId(), claim);
 		}
 		scan.close();
 		
 		Grid grid = new Grid();
 		
-		for(Claim i : claims) {
-			grid.markGrid(i);
+		for(Integer i = 1; i <= claims.size(); i++) {
+			grid.markGrid(claims.get(i),claims);
 		}
 		Integer result = grid.getOverlap();
 		System.out.println("result = " + result);
-
+		for(Integer i = 1; i <= claims.size(); i++) {
+			if (!claims.get(i).getOverlap()) {
+				System.out.println("Non overlapping ID = " + i);
+			}
+		}
 	}
 }

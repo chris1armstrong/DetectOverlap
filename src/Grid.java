@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Grid {
 	private ArrayList<int[]> grid;
@@ -15,7 +16,7 @@ public class Grid {
 		this.overlap = 0;
 	}
 	
-	public void markGrid(Claim claim) {
+	public void markGrid(Claim claim, HashMap<Integer, Claim> map) {
 		Integer left = claim.getLeftSpace();
 		Integer top = claim.getTopSpace();
 		Integer width = claim.getWidth();
@@ -29,13 +30,15 @@ public class Grid {
 				int[] row = this.grid.get(i);
 				switch (row[j]) {
 					case 0:
-						row[j] = 1;
-						break;
-					case 1:
-						row[j] = 2;
-						this.overlap++;
+						row[j] = claim.getId();
 						break;
 					default:
+						claim.setOverlap(true);
+						if (row[j] >= 0) {
+							map.get(row[j]).setOverlap(true);
+							row[j] = -1;
+							this.overlap++;
+						}
 						break;
 				}
 				j++;

@@ -5,6 +5,7 @@ public class Claim {
 	private Integer topSpace;
 	private Integer width;
 	private Integer height;
+	private Boolean overlap;
 	
 	public Claim(Integer id, Integer leftSpace, Integer topSpace, Integer width, Integer height) {
 		this.id = id;
@@ -12,6 +13,7 @@ public class Claim {
 		this.topSpace = topSpace;
 		this.width = width;
 		this.height = height;
+		this.overlap = false;
 	}
 	
 	public Integer getId() {
@@ -52,6 +54,14 @@ public class Claim {
 
 	public void setHeight(Integer height) {
 		this.height = height;
+	}
+
+	public Boolean getOverlap() {
+		return overlap;
+	}
+
+	public void setOverlap(Boolean overlap) {
+		this.overlap = overlap;
 	}
 
 }
